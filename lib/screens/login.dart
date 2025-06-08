@@ -1,3 +1,5 @@
+import 'package:arcanum/screens/home.dart';
+import 'package:arcanum/screens/register.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -33,10 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Logo
-                        Image.asset(
-                          'assets/images/ARCANUM.png',
-                          height: 100,
-                        ),
+                        Image.asset('assets/images/ARCANUM.png', height: 100),
                         const SizedBox(height: 40),
 
                         // Email
@@ -84,14 +83,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                // TODO: Navigate to Home screen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreen(),
+                                    ),
+                                  );
                               }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 14),
+                              padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -106,20 +109,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text("Don't have an account? "),
-                            GestureDetector(
-                              onTap: () {
-                                // TODO: Navigate to Register screen
-                              },
-                              child: const Text(
-                                "Register here",
-                                style: TextStyle(
-                                  color: Color(0xFFFFBD59),
-                                  fontWeight: FontWeight.bold,
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => const RegisterScreen(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Register here",
+                                  style: TextStyle(
+                                    color: Color(0xFFFFBD59),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
