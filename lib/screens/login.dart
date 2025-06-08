@@ -1,3 +1,4 @@
+import 'package:arcanum/controller.dart';
 import 'package:arcanum/screens/home.dart';
 import 'package:arcanum/screens/register.dart';
 import 'package:flutter/material.dart';
@@ -83,12 +84,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
-                                    ),
-                                  );
+
+                                //Sends the encapsulated user details to the controller
+                                Controller().login(
+                                  emailController.text,
+                                  passwordController.text,
+                                );
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(),
+                                  ),
+                                );
                               }
                             },
                             style: ElevatedButton.styleFrom(

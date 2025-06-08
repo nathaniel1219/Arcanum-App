@@ -1,15 +1,13 @@
-// home.dart
+import 'package:arcanum/models/product_list.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
-import '../widgets/navbar.dart';
-import '../models/product_list.dart';
+import '../widgets/navbar.dart'; 
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class CollectiblesScreen extends StatelessWidget {
+  CollectiblesScreen({super.key});
 
   final List<Product> products = [
-    ...ProductList.tcg,
     ...ProductList.collectibles,
   ];
 
@@ -50,7 +48,7 @@ class HomeScreen extends StatelessWidget {
           return ProductCard(product: products[index]);
         },
       ),
-      bottomNavigationBar: const CustomNavBar(currentPage: 'home'),
+      bottomNavigationBar: const CustomNavBar(currentPage: 'collectibles'),
     );
   }
 }

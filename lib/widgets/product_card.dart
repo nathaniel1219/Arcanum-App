@@ -1,84 +1,124 @@
+// product_card.dart
+import 'package:arcanum/screens/cart.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
+import '../screens/view_product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-
   const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8),
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Image.asset(
-              //product.imageUrl,
-              //product.'assets/images/1_prismatic_evo.jpg',
-              'assets/images/ARCANUM.png',
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(
-                  Icons.broken_image,
-                  size: 80,
-                  color: Colors.red,
-                );
-              },
-            ),
-            const SizedBox(height: 8),
-            Text(
-              product.name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              product.description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 6),
-            Text(
-              'LKR ${product.price.toStringAsFixed(2)}',
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 10),
+    const double buttonFont = 13.0;
+    const Color peachColor = Color(0xFFFFBD59);
 
-            // Buttons stacked vertically
-            Column(
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // 🖼️ Product Image
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.asset(
+                product.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          // 📝 Product Details
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: double.infinity,
+                Text(
+                  product.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'LKR ${product.price.toStringAsFixed(2)}',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+
+          // 🔘 Buttons Row
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                // 👁️ View Button (Black with Peach Text)
+                Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Add To Cart',
-                      style: TextStyle(color: Colors.black),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ViewProductScreen(product: product),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'View',
+                      style: TextStyle(
+                        color: peachColor,
+                        fontSize: buttonFont,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 6),
-                SizedBox(
-                  width: double.infinity,
+                const SizedBox(width: 8),
+
+                // 🛒 Add Button (Peach with Black Text)
+                Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CartScreen(
+                            addedProduct: product,
+                          ),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
+                      backgroundColor: peachColor,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                     child: const Text(
-                      'Buy Now',
-                      style: TextStyle(color: Color(0xFFFFBD59)),
+                      'Add',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: buttonFont,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 6),
+        ],
       ),
     );
   }
