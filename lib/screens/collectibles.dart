@@ -1,4 +1,5 @@
 import 'package:arcanum/models/product_list.dart';
+import 'package:arcanum/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
@@ -29,12 +30,7 @@ class CollectiblesScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/ARCANUM.png', height: 40),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+      appBar: const CustomAppBar(),
       body: GridView.builder(
         padding: const EdgeInsets.all(8),
         itemCount: products.length,

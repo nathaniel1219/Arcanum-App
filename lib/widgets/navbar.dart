@@ -1,84 +1,95 @@
 // lib/widgets/navbar.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/theme.dart';
 import '../screens/home.dart';
 import '../screens/tcg.dart';
 import '../screens/collectibles.dart';
-import '../screens/cart.dart'; 
-import '../screens/profile.dart'; 
+import '../screens/cart.dart';
+import '../screens/profile.dart';
 
 class CustomNavBar extends StatelessWidget {
   final String currentPage;
-
   const CustomNavBar({super.key, required this.currentPage});
 
   @override
   Widget build(BuildContext context) {
-    // Determine icon size and color based on current page
-    double getIconSize(String page) => currentPage == page ? 32 : 24;
-    Color getIconColor(String page) => currentPage == page ? const Color(0xFFFFBD59) : Colors.black;
+    // Determine current brightness from ThemeProvider
+    final isDark = Provider.of<ThemeProvider>(context).themeMode ==
+        ThemeMode.dark ||
+        (Provider.of<ThemeProvider>(context).themeMode == ThemeMode.system &&
+         MediaQuery.of(context).platformBrightness == Brightness.dark);
+
+    final bgColor = isDark ? Colors.black : Colors.white;
+    final selectedColor = const Color(0xFFFFBD59);
+    final unselectedColor = isDark ? Colors.grey.shade400 : Colors.grey;
+
+    double iconSize(String page) => currentPage == page ? 32 : 24;
+    Color iconColor(String page) =>
+        currentPage == page ? selectedColor : unselectedColor;
 
     return Container(
-      color: Colors.white,
+      color: bgColor,
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            iconSize: getIconSize('home'),
-            icon: Icon(Icons.home, color: getIconColor('home')), // Use dynamic color
+            iconSize: iconSize('home'),
+            icon: Icon(Icons.home, color: iconColor('home')),
             onPressed: () {
               if (currentPage != 'home') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(builder: (_) => HomeScreen()),
                 );
               }
             },
           ),
           IconButton(
-            iconSize: getIconSize('tcg'),
-            icon: Icon(Icons.style, color: getIconColor('tcg')), // Use dynamic color
+            iconSize: iconSize('tcg'),
+            icon: Icon(Icons.style, color: iconColor('tcg')),
             onPressed: () {
               if (currentPage != 'tcg') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => TcgScreen()),
+                  MaterialPageRoute(builder: (_) => TcgScreen()),
                 );
               }
             },
           ),
           IconButton(
-            iconSize: getIconSize('collectibles'),
-            icon: Icon(Icons.collections, color: getIconColor('collectibles')), // Use dynamic color
+            iconSize: iconSize('collectibles'),
+            icon: Icon(Icons.collections, color: iconColor('collectibles')),
             onPressed: () {
               if (currentPage != 'collectibles') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => CollectiblesScreen()),
+                  MaterialPageRoute(builder: (_) => CollectiblesScreen()),
                 );
               }
             },
           ),
           IconButton(
-            iconSize: getIconSize('cart'),
-            icon: Icon(Icons.shopping_cart, color: getIconColor('cart')), // Use dynamic color
+            iconSize: iconSize('cart'),
+            icon: Icon(Icons.shopping_cart, color: iconColor('cart')),
             onPressed: () {
-              if (currentPage != 'cart') { // Add navigation logic for CartScreen
+              if (currentPage != 'cart') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                  MaterialPageRoute(builder: (_) => const CartScreen()),
                 );
               }
             },
           ),
           IconButton(
-            iconSize: getIconSize('profile'),
-            icon: Icon(Icons.person, color: getIconColor('profile')), // Use dynamic color
+            iconSize: iconSize('profile'),
+            icon: Icon(Icons.person, color: iconColor('profile')),
             onPressed: () {
-              if (currentPage != 'profile') { // Add navigation logic for ProfileScreen
+              if (currentPage != 'profile') {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                  MaterialPageRoute(builder: (_) => const ProfileScreen()),
                 );
               }
             },

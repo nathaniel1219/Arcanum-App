@@ -1,3 +1,4 @@
+import 'package:arcanum/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../screens/cart.dart';
@@ -13,12 +14,7 @@ class ViewProductScreen extends StatelessWidget {
     const Color peachColor = Color(0xFFFFBD59);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/ARCANUM.png', height: 40),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+     appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

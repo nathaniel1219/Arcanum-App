@@ -1,4 +1,3 @@
-// product_card.dart
 import 'package:arcanum/screens/cart.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
@@ -19,7 +18,6 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // 🖼️ Product Image
           Expanded(
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
@@ -30,7 +28,6 @@ class ProductCard extends StatelessWidget {
             ),
           ),
 
-          // 📝 Product Details
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             child: Column(
@@ -49,12 +46,12 @@ class ProductCard extends StatelessWidget {
             ),
           ),
 
-          // 🔘 Buttons Row
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
-                // 👁️ View Button (Black with Peach Text)
+
+                //Navigates to view the product details
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -84,7 +81,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
 
-                // 🛒 Add Button (Peach with Black Text)
+                //Adds the product object to the card
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
