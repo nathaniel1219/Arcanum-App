@@ -9,9 +9,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController    = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey             = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,124 +20,107 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            bool isWide = constraints.maxWidth > 600;
-            double horizontalPadding = isWide ? 48.0 : 24.0;
-            double fieldWidth = isWide ? double.infinity : 280;
+            final bool isWide = constraints.maxWidth > 600;
+            final double hPad = isWide ? 48.0 : 24.0;
+            final double fieldW = isWide ? double.infinity : 280;
 
             return Center(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  padding: EdgeInsets.symmetric(horizontal: hPad),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Logo
                         Image.asset('assets/images/ARCANUM.png', height: 100),
                         const SizedBox(height: 40),
 
                         // Username
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: TextFormField(
                             controller: usernameController,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(color: Colors.black),
                             decoration: const InputDecoration(
                               labelText: 'Username',
+                              labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your username';
-                              }
-                              return null;
-                            },
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Please enter your username' : null,
                           ),
                         ),
                         const SizedBox(height: 16),
 
                         // Email
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: TextFormField(
                             controller: emailController,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(color: Colors.black),
                             decoration: const InputDecoration(
                               labelText: 'Email',
+                              labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              return null;
-                            },
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Please enter your email' : null,
                           ),
                         ),
                         const SizedBox(height: 16),
 
                         // Password
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: TextFormField(
                             controller: passwordController,
                             obscureText: true,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(color: Colors.black),
                             decoration: const InputDecoration(
                               labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a password';
-                              }
-                              return null;
-                            },
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Please enter a password' : null,
                           ),
                         ),
                         const SizedBox(height: 24),
 
                         // Register Button
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                // Show success alert
                                 showDialog(
                                   context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("Success"),
-                                      content: const Text(
-                                        "User successfully registered.",
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(
-                                              context,
-                                            ).pop(); // Close the dialog
-                                          },
-                                          child: const Text(
-                                            "OK",
-                                            style: TextStyle(
-                                              color: Color(0xFFFFBD59),
-                                            ),
-                                          ),
+                                  builder: (_) => AlertDialog(
+                                    title: const Text("Success"),
+                                    content: const Text("User successfully registered."),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text(
+                                          "OK",
+                                          style: TextStyle(color: Color(0xFFFFBD59)),
                                         ),
-                                      ],
-                                    );
-                                  },
+                                      ),
+                                    ],
+                                  ),
                                 );
                               }
                             },
-
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                                  borderRadius: BorderRadius.circular(12)),
                             ),
                             child: const Text('Register'),
                           ),
@@ -148,21 +131,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Already have an account? "),
+                            const Text("Already have an account? ", style: TextStyle(color: Colors.black),),
                             MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(
-                                    context,
-                                  ); // Go back to LoginScreen
-                                },
+                                onTap: () => Navigator.pop(context),
                                 child: const Text(
                                   "Login here",
                                   style: TextStyle(
-                                    color: Color(0xFFFFBD59),
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                      color: Color(0xFFFFBD59),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),

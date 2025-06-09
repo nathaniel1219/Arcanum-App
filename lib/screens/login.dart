@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:arcanum/controller.dart';
 import 'package:arcanum/screens/home.dart';
 import 'package:arcanum/screens/register.dart';
-import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,80 +22,72 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            bool isWide = constraints.maxWidth > 600;
-            double horizontalPadding = isWide ? 48.0 : 24.0;
-            double fieldWidth = isWide ? double.infinity : 280;
+            final bool isWide = constraints.maxWidth > 600;
+            final double hPad = isWide ? 48.0 : 24.0;
+            final double fieldW = isWide ? double.infinity : 280;
 
             return Center(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  padding: EdgeInsets.symmetric(horizontal: hPad),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Logo
                         Image.asset('assets/images/ARCANUM.png', height: 100),
                         const SizedBox(height: 40),
 
                         // Email
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: TextFormField(
                             controller: emailController,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(color: Colors.black),
                             decoration: const InputDecoration(
                               labelText: 'Email',
+                              labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              return null;
-                            },
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Please enter your email' : null,
                           ),
                         ),
                         const SizedBox(height: 16),
 
                         // Password
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: TextFormField(
                             controller: passwordController,
                             obscureText: true,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(color: Colors.black),
                             decoration: const InputDecoration(
                               labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                              return null;
-                            },
+                            validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Please enter your password' : null,
                           ),
                         ),
                         const SizedBox(height: 24),
 
                         // Login Button
                         SizedBox(
-                          width: fieldWidth,
+                          width: fieldW,
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-
-                                //Sends the encapsulated user details to the controller
                                 Controller().login(
                                   emailController.text,
                                   passwordController.text,
                                 );
-
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeScreen(),
-                                  ),
+                                  MaterialPageRoute(builder: (_) => HomeScreen()),
                                 );
                               }
                             },
@@ -104,8 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                                  borderRadius: BorderRadius.circular(12)),
                             ),
                             child: const Text('Login'),
                           ),
@@ -116,25 +107,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Don't have an account? "),
+                            const Text("Don't have an account? ", style: TextStyle(color: Colors.black),),
                             MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => const RegisterScreen(),
-                                    ),
-                                  );
-                                },
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const RegisterScreen()),
+                                ),
                                 child: const Text(
                                   "Register here",
                                   style: TextStyle(
-                                    color: Color(0xFFFFBD59),
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                      color: Color(0xFFFFBD59),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
