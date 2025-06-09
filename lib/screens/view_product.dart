@@ -48,7 +48,8 @@ class ViewProductScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 24),
-            // 📦 Add to Cart Button
+            
+            // Add to Cart Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

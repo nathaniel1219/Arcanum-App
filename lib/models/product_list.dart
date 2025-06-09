@@ -3,37 +3,37 @@ import 'package:arcanum/models/product.dart';
 class ProductList {
   static final List<Product> tcg = [
     Product(
-      name: 'Prismatic Evolution Booster Box', // Changed
+      name: 'Prismatic Evolution Booster Box', 
       imageUrl: 'assets/images/1_prismatic_evo.jpg',
       price: 18500.00,
       description: 'Unleash new strategies with the Prismatic Evolution Booster Box! Features rare cards, powerful new archetypes, and stunning artwork to enhance your collection.',
     ),
     Product(
-      name: 'Scarlet & Violet Booster Pack', // Changed
+      name: 'Scarlet & Violet Booster Pack', 
       imageUrl: 'assets/images/2_sv_bp.jpg',
       price: 1500.00,
       description: 'Dive into the Paldea region with a single Scarlet & Violet Booster Pack. Discover new Pokémon ex cards and exciting mechanics!',
     ),
     Product(
-      name: 'Scarlet & Violet Surging Sparks Booster Pack', // Changed
+      name: 'Scarlet & Violet Surging Sparks Booster Pack', 
       imageUrl: 'assets/images/3_sv_surging_sparks_bp.png',
       price: 1650.00,
       description: 'Electrify your battles with the Surging Sparks Booster Pack! Features electric-type Pokémon and trainers to supercharge your deck.',
     ),
     Product(
-      name: 'Scarlet & Violet Booster Box', // Changed (was SF_BB, now generic SV)
+      name: 'Scarlet & Violet Booster Box',
       imageUrl: 'assets/images/4_sf_bb.png',
       price: 21000.00,
       description: 'Get a full box of Scarlet & Violet booster packs! Perfect for serious collectors and competitive players looking for a wide variety of cards.',
     ),
     Product(
-      name: 'Scarlet & Violet Temporal Forces Booster Box', // Changed
+      name: 'Scarlet & Violet Temporal Forces Booster Box', 
       imageUrl: 'assets/images/5_sv_temporal_forced_bb.jpeg',
       price: 22500.00,
       description: 'Bend time and space with the Temporal Forces Booster Box. Uncover ancient and future Pokémon, and alter the flow of battle.',
     ),
     Product(
-      name: 'Charizard Special Art Collection', // Added "Special" for clarity
+      name: 'Charizard Special Art Collection', 
       imageUrl: 'assets/images/6_charizard_art.jpeg',
       price: 12000.00,
       description: 'A must-have for Charizard fans! This collection features exclusive artwork and promotional cards of the iconic fire-type Pokémon.',
@@ -45,67 +45,67 @@ class ProductList {
       description: 'Experience the world of Pokémon GO in the TCG! Catch fan-favorite Pokémon from the popular mobile game in this special booster pack.',
     ),
     Product(
-      name: 'Scarlet & Violet Stellar Crown Booster Pack', // Changed
+      name: 'Scarlet & Violet Stellar Crown Booster Pack', 
       imageUrl: 'assets/images/8_sv_stellar_crown_bp.png',
       price: 1900.00,
       description: 'Reach for the stars with the Stellar Crown Booster Pack. Discover cosmic Pokémon and rare trainer cards that will elevate your game.',
     ),
     Product(
-      name: 'Shining Fates Greninja VMAX Box', // Clarified based on common product names
+      name: 'Shining Fates Greninja VMAX Box', 
       imageUrl: 'assets/images/9_sf_greninja_box.jpeg',
       price: 9500.00,
       description: 'Unleash the power of Greninja with this exclusive box. Includes special Greninja promo cards and booster packs from the set.',
     ),
     Product(
-      name: 'Slifer the Sky Dragon Yu-Gi-Oh! Card', // Changed
+      name: 'Slifer the Sky Dragon Yu-Gi-Oh! Card', 
       imageUrl: 'assets/images/10_silfer_ygo.jpeg',
       price: 7500.00,
       description: 'Command one of the legendary Egyptian God Cards! Slifer the Sky Dragon brings immense power to any Yu-Gi-Oh! duel.',
     ),
     Product(
-      name: 'Obelisk the Tormentor Yu-Gi-Oh! Card', // Changed
+      name: 'Obelisk the Tormentor Yu-Gi-Oh! Card', 
       imageUrl: 'assets/images/11_obelisk_ygo.png',
       price: 7500.00,
       description: 'Dominate the field with Obelisk the Tormentor, a formidable Egyptian God Card known for its crushing attack power.',
     ),
     Product(
-      name: 'Stampede Booster Box Yu-Gi-Oh!', // Changed
+      name: 'Stampede Booster Box Yu-Gi-Oh!', 
       imageUrl: 'assets/images/12_stampede_bb_ygo.jpeg',
       price: 16000.00,
       description: 'Charge into battle with the Stampede Booster Box! Features new monster types and powerful spell/trap cards for dynamic duels.',
     ),
     Product(
-      name: 'Stampede Booster Pack Yu-Gi-Oh!', // Changed
+      name: 'Stampede Booster Pack Yu-Gi-Oh!', 
       imageUrl: 'assets/images/13_stampede_bp_ygo.jpeg',
       price: 1300.00,
       description: 'Unleash new monsters and strategies with a single Stampede Booster Pack. Perfect for expanding your Yu-Gi-Oh! deck.',
     ),
     Product(
-      name: 'Blue-Eyes White Dragon Yu-Gi-Oh! Card', // Changed
+      name: 'Blue-Eyes White Dragon Yu-Gi-Oh! Card', 
       imageUrl: 'assets/images/14_blueeyes_ygo.jpeg',
       price: 6000.00,
       description: 'The legendary Blue-Eyes White Dragon! A staple for any collector or duelist, known for its iconic status and powerful attack.',
     ),
     Product(
-      name: 'Alliance Booster Box Yu-Gi-Oh!', // Changed
+      name: 'Alliance Booster Box Yu-Gi-Oh!', 
       imageUrl: 'assets/images/15_alliance_bb_ygo.jpeg',
       price: 17500.00,
       description: 'Forge unbreakable bonds with the Alliance Booster Box! Discover synergistic cards and build a cohesive strategy for victory.',
     ),
     Product(
-      name: 'Alliance Booster Pack Yu-Gi-Oh!', // Changed
+      name: 'Alliance Booster Pack Yu-Gi-Oh!', 
       imageUrl: 'assets/images/16_alliance_bp_ygo.jpeg',
       price: 1450.00,
       description: 'Strengthen your deck with new allies and powerful effects from an Alliance Booster Pack.',
     ),
     Product(
-      name: 'Yu-Gi-Oh! Legendary Decks II', // Clarified as there are multiple sets
+      name: 'Yu-Gi-Oh! Legendary Decks II', 
       imageUrl: 'assets/images/17_lege_decks_ygo.jpeg',
       price: 11000.00,
       description: 'Relive classic duels with Legendary Decks! Features iconic cards and strategies used by fan-favorite characters from the anime.',
     ),
     Product(
-      name: 'Dark Magician Girl Yu-Gi-Oh! Card', // Changed
+      name: 'Dark Magician Girl Yu-Gi-Oh! Card', 
       imageUrl: 'assets/images/18_mag_girl_ygo.jpeg',
       price: 5500.00,
       description: 'A beloved and powerful spellcaster. Dark Magician Girl is a staple for any Yu-Gi-Oh! collection.',

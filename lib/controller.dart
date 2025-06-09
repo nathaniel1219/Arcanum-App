@@ -1,5 +1,3 @@
-// lib/controllers/controller.dart
-
 import '../models/user.dart';
 
 class Controller {

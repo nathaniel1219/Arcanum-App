@@ -1,4 +1,3 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:arcanum/models/theme.dart';
@@ -27,7 +26,7 @@ class ArcanumApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.grey,
         fontFamily: 'Roboto',
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
@@ -40,7 +39,7 @@ class ArcanumApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.grey,
         fontFamily: 'Roboto',
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,

@@ -1,4 +1,3 @@
-// lib/screens/cart.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/theme.dart';
@@ -17,7 +16,7 @@ class CartScreen extends StatelessWidget {
         (Provider.of<ThemeProvider>(context).themeMode == ThemeMode.system &&
             MediaQuery.of(context).platformBrightness == Brightness.dark);
 
-    // Build initial placeholder items
+    // products as placeholders in the cart
     final List<Map<String, dynamic>> cartItems = [
       {
         'image': 'assets/images/20_icespice.png',
