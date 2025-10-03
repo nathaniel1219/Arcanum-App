@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:arcanum/controller.dart';
+import 'package:arcanum/controllers/controller.dart';
 import 'package:arcanum/screens/home.dart';
-import 'package:arcanum/screens/register.dart';
+import 'package:arcanum/screens/auth/register.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

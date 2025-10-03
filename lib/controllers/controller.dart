@@ -1,4 +1,4 @@
-import '../models/user.dart';
+import '../../models/user.dart';
 
 class Controller {
   static final Controller _instance = Controller._internal();

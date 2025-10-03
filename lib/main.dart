@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart'; // ✅ Add this import
 import 'package:arcanum/models/theme.dart';
-import 'screens/login.dart';
+import 'screens/auth/login.dart';
 
 void main() {
   runApp(
@@ -33,7 +33,7 @@ class ArcanumApp extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
         ),
-        bottomAppBarTheme: const BottomAppBarTheme(
+        bottomAppBarTheme: const BottomAppBarThemeData(
           color: Colors.white,
         ),
       ),
@@ -46,7 +46,7 @@ class ArcanumApp extends StatelessWidget {
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
         ),
-        bottomAppBarTheme: const BottomAppBarTheme(
+        bottomAppBarTheme: const BottomAppBarThemeData(
           color: Colors.black,
         ),
       ),

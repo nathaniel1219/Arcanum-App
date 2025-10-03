@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import '../models/theme.dart';
 import '../widgets/appbar.dart';
 import '../widgets/navbar.dart';
-import '../controller.dart';
-import '../screens/login.dart';
+import '../controllers/controller.dart';
+import 'auth/login.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -23,9 +23,7 @@ class ProfileScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     if (user == null) {
-      return const Scaffold(
-        body: Center(child: Text("No user logged in")),
-      );
+      return const Scaffold(body: Center(child: Text("No user logged in")));
     }
 
     return Scaffold(
@@ -42,35 +40,58 @@ class ProfileScreen extends StatelessWidget {
               ),
               const Divider(height: 32),
 
-              Text("Email: ${user.email}",
-                  style: const TextStyle(fontSize: 18)),
+              Text(
+                "Email: ${user.email}",
+                style: const TextStyle(fontSize: 18),
+              ),
               const Divider(height: 32),
 
-              Text("Password: ${user.password}",
-                  style: const TextStyle(fontSize: 18)),
+              Text(
+                "Password: ${user.password}",
+                style: const TextStyle(fontSize: 18),
+              ),
               const Divider(height: 32),
 
               const Text(
                 "Theme",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              RadioListTile<AppThemeMode>(
-                title: const Text("System Default"),
-                value: AppThemeMode.system,
-                groupValue: themeProvider.modeSetting,
-                onChanged: (v) => themeProvider.setMode(v!),
-              ),
-              RadioListTile<AppThemeMode>(
-                title: const Text("Light Mode"),
-                value: AppThemeMode.light,
-                groupValue: themeProvider.modeSetting,
-                onChanged: (v) => themeProvider.setMode(v!),
-              ),
-              RadioListTile<AppThemeMode>(
-                title: const Text("Dark Mode"),
-                value: AppThemeMode.dark,
-                groupValue: themeProvider.modeSetting,
-                onChanged: (v) => themeProvider.setMode(v!),
+
+              // Theme selection radio buttons
+              // Theme selection radio buttons
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text("System Default"),
+                    leading: Radio<AppThemeMode>(
+                      value: AppThemeMode.system,
+                      groupValue: themeProvider.modeSetting,
+                      onChanged: (AppThemeMode? value) {
+                        if (value != null) themeProvider.setMode(value);
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text("Light Mode"),
+                    leading: Radio<AppThemeMode>(
+                      value: AppThemeMode.light,
+                      groupValue: themeProvider.modeSetting,
+                      onChanged: (AppThemeMode? value) {
+                        if (value != null) themeProvider.setMode(value);
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text("Dark Mode"),
+                    leading: Radio<AppThemeMode>(
+                      value: AppThemeMode.dark,
+                      groupValue: themeProvider.modeSetting,
+                      onChanged: (AppThemeMode? value) {
+                        if (value != null) themeProvider.setMode(value);
+                      },
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 40),
@@ -81,7 +102,9 @@ class ProfileScreen extends StatelessWidget {
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 14),
+                      horizontal: 32,
+                      vertical: 14,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
