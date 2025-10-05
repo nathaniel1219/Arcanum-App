@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:arcanum/controllers/controller.dart';
+import 'package:arcanum/controllers/auth_controller.dart';
 import 'package:arcanum/screens/home.dart';
 import 'package:arcanum/screens/auth/register.dart';
 
@@ -14,6 +14,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,18 +87,46 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           width: fieldW,
                           child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                Controller().login(
-                                  emailController.text,
-                                  passwordController.text,
-                                );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (_) => HomeScreen()),
-                                );
-                              }
-                            },
+                            onPressed: _isLoading
+                                ? null
+                                : () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      setState(() => _isLoading = true);
+                                      try {
+                                        await AuthController().login(
+                                          emailController.text.trim(),
+                                          passwordController.text.trim(),
+                                        );
+
+                                        if (AuthController().isLoggedIn()) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Login successful!')),
+                                          );
+
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(builder: (_) =>  HomeScreen()),
+                                          );
+                                        }
+                                      } catch (e) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => AlertDialog(
+                                            title: const Text("Login Failed"),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context),
+                                                child: const Text("OK"),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } finally {
+                                        setState(() => _isLoading = false);
+                                      }
+                                    }
+                                  },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
@@ -98,7 +134,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12)),
                             ),
-                            child: const Text('Login'),
+                            child: _isLoading
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                  )
+                                : const Text('Login'),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -107,20 +149,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Don't have an account? ", style: TextStyle(color: Colors.black),),
+                            const Text("Don't have an account? ", style: TextStyle(color: Colors.black)),
                             MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
                                 onTap: () => Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const RegisterScreen()),
+                                  MaterialPageRoute(builder: (_) => const RegisterScreen()),
                                 ),
                                 child: const Text(
                                   "Register here",
-                                  style: TextStyle(
-                                      color: Color(0xFFFFBD59),
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(color: Color(0xFFFFBD59), fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart'; // ✅ Add this import
+import 'package:google_fonts/google_fonts.dart';
 import 'package:arcanum/models/theme.dart';
+import 'package:arcanum/controllers/auth_controller.dart';
 import 'screens/auth/login.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AuthController()),
+      ],
       child: const ArcanumApp(),
     ),
   );
@@ -41,7 +45,7 @@ class ArcanumApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         primarySwatch: Colors.grey,
-        fontFamily: GoogleFonts.aldrich().fontFamily, 
+        fontFamily: GoogleFonts.aldrich().fontFamily,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:arcanum/controllers/auth_controller.dart';
+import 'package:arcanum/screens/home.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -9,9 +11,18 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController    = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey             = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (v) =>
-                                (v == null || v.isEmpty) ? 'Please enter your username' : null,
+                            validator: (v) => (v == null || v.isEmpty) ? 'Please enter your username' : null,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -66,8 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (v) =>
-                                (v == null || v.isEmpty) ? 'Please enter your email' : null,
+                            validator: (v) => (v == null || v.isEmpty) ? 'Please enter your email' : null,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -85,8 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               labelStyle: TextStyle(color: Colors.black54),
                               border: OutlineInputBorder(),
                             ),
-                            validator: (v) =>
-                                (v == null || v.isEmpty) ? 'Please enter a password' : null,
+                            validator: (v) => (v == null || v.isEmpty) ? 'Please enter a password' : null,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -95,34 +103,76 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           width: fieldW,
                           child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    title: const Text("Success"),
-                                    content: const Text("User successfully registered."),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text(
-                                          "OK",
-                                          style: TextStyle(color: Color(0xFFFFBD59)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            },
+                            onPressed: _isLoading
+                                ? null
+                                : () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      setState(() => _isLoading = true);
+                                      try {
+                                        // NOTE: we pass passwordConfirmation as the 4th argument (required by your API)
+                                        await AuthController().register(
+                                          usernameController.text.trim(),
+                                          emailController.text.trim(),
+                                          passwordController.text.trim(),
+                                          passwordController.text.trim(), // password_confirmation
+                                        );
+
+                                        if (AuthController().isLoggedIn()) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialog(
+                                              title: const Text("Success"),
+                                              content: const Text("User successfully registered."),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(builder: (_) =>  HomeScreen()),
+                                                    );
+                                                  },
+                                                  child: const Text(
+                                                    "OK",
+                                                    style: TextStyle(color: Color(0xFFFFBD59)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      } catch (e) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => AlertDialog(
+                                            title: const Text("Registration Failed"),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context),
+                                                child: const Text("OK"),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } finally {
+                                        setState(() => _isLoading = false);
+                                      }
+                                    }
+                                  },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             ),
-                            child: const Text('Register'),
+                            child: _isLoading
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                  )
+                                : const Text('Register'),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -131,16 +181,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Already have an account? ", style: TextStyle(color: Colors.black),),
+                            const Text("Already have an account? ", style: TextStyle(color: Colors.black)),
                             MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
                                 onTap: () => Navigator.pop(context),
                                 child: const Text(
                                   "Login here",
-                                  style: TextStyle(
-                                      color: Color(0xFFFFBD59),
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(color: Color(0xFFFFBD59), fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
