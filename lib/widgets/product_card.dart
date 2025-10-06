@@ -1,7 +1,8 @@
-import 'package:arcanum/screens/cart.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../screens/view_product.dart';
+import 'package:provider/provider.dart';
+import '../controllers/cart_controller.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -20,11 +21,10 @@ class ProductCard extends StatelessWidget {
         children: [
           Expanded(
             child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-              child: Image.asset(
-                product.imageUrl,
-                fit: BoxFit.cover,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
               ),
+              child: Image.asset(product.imageUrl, fit: BoxFit.cover),
             ),
           ),
 
@@ -35,7 +35,10 @@ class ProductCard extends StatelessWidget {
               children: [
                 Text(
                   product.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -50,7 +53,6 @@ class ProductCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
-
                 //Navigates to view the product details
                 Expanded(
                   child: ElevatedButton(
@@ -85,15 +87,22 @@ class ProductCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      final cart = Provider.of<CartController>(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => CartScreen(
-                            addedProduct: product,
-                          ),
-                        ),
+                        listen: false,
+                      );
+                      cart.addToCart({
+                        'product_id': product.id,
+                        'product_name': product.name,
+                        'price': product.price,
+                        'image_url': product.imageUrl,
+                      });
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Added to cart!')),
                       );
                     },
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: peachColor,
                       padding: const EdgeInsets.symmetric(vertical: 10),

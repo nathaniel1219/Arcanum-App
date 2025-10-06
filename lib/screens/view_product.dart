@@ -1,8 +1,9 @@
 import 'package:arcanum/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../screens/cart.dart';
 import '../widgets/navbar.dart';
+import 'package:provider/provider.dart';
+import '../controllers/cart_controller.dart';
 
 class ViewProductScreen extends StatelessWidget {
   final Product product;
@@ -14,7 +15,7 @@ class ViewProductScreen extends StatelessWidget {
     const Color peachColor = Color(0xFFFFBD59);
 
     return Scaffold(
-     appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -43,24 +44,30 @@ class ViewProductScreen extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
-            Text(
-              product.description,
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text(product.description, style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 24),
-            
+
             // Add to Cart Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
+                  final cart = Provider.of<CartController>(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => CartScreen(addedProduct: product),
-                    ),
+                    listen: false,
+                  );
+                  cart.addToCart({
+                    'product_id': product.id,
+                    'product_name': product.name,
+                    'price': product.price,
+                    'image_url': product.imageUrl,
+                  });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Added to cart!')),
                   );
                 },
+
                 style: ElevatedButton.styleFrom(
                   backgroundColor: peachColor,
                   padding: const EdgeInsets.symmetric(vertical: 16),

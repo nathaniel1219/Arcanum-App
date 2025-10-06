@@ -4,7 +4,6 @@ import '../widgets/appbar.dart';
 import '../widgets/product_card.dart';
 import '../widgets/navbar.dart';
 import '../controllers/product_controller.dart';
-import '../models/product.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
