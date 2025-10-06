@@ -12,13 +12,14 @@ class AuthController extends ChangeNotifier {
 
   // Login via API
   Future<void> login(String email, String password) async {
-    final data = await ApiService.login(email, password);
+  final data = await ApiService.login(email, password);
 
-    authToken = data['access_token']; // backend token
-    final userData = data['user'];
-    currentUser = User.fromJson(userData); // use fromJson
-    notifyListeners();
-  }
+  authToken = data['access_token']; // ✅ store token
+  final userData = data['user']; 
+  currentUser = User.fromJson(userData); // use fromJson
+  notifyListeners();
+}
+
 
   // Register via API
   Future<void> register(String name, String email, String password, String passwordConfirmation) async {

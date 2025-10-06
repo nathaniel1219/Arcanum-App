@@ -1,19 +1,17 @@
-import 'package:arcanum/models/product_list.dart';
-import 'package:arcanum/widgets/appbar.dart';
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import 'package:provider/provider.dart';
+import '../widgets/appbar.dart';
 import '../widgets/product_card.dart';
 import '../widgets/navbar.dart';
+import '../controllers/product_controller.dart';
 
 class TcgScreen extends StatelessWidget {
-  TcgScreen({super.key});
-
-  final List<Product> products = [
-    ...ProductList.tcg,
-  ];
+  const TcgScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final productController = Provider.of<ProductController>(context);
+
     final media = MediaQuery.of(context);
     final isPortrait = media.orientation == Orientation.portrait;
     final screenWidth = media.size.width;
@@ -29,19 +27,39 @@ class TcgScreen extends StatelessWidget {
       crossAxisCount = 2;
     }
 
+    // ✅ Filter products by TCG category
+    final products =
+        productController.products.where((p) => p.category == 'TCG').toList();
+
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: products.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-          childAspectRatio: 0.65,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-        ),
-        itemBuilder: (context, index) {
-          return ProductCard(product: products[index]);
+      body: Builder(
+        builder: (_) {
+          if (productController.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (productController.errorMessage != null && products.isEmpty) {
+            return Center(
+              child: Text(
+                'Error: ${productController.errorMessage}\nNo cached products available.',
+              ),
+            );
+          } else if (products.isEmpty) {
+            return const Center(child: Text('No products found.'));
+          }
+
+          return GridView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: products.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              childAspectRatio: 0.65,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+            ),
+            itemBuilder: (context, index) {
+              return ProductCard(product: products[index]);
+            },
+          );
         },
       ),
       bottomNavigationBar: const CustomNavBar(currentPage: 'tcg'),

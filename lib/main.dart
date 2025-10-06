@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:arcanum/models/theme.dart';
 import 'package:arcanum/controllers/auth_controller.dart';
+import 'package:arcanum/controllers/product_controller.dart'; // ✅ Added ProductController import
 import 'screens/auth/login.dart';
 
 void main() {
@@ -11,6 +12,9 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AuthController()),
+        ChangeNotifierProvider(
+          create: (_) => ProductController()..fetchProducts(),
+        ), // ✅ Added ProductController to MultiProvider and fetchProducts() called here
       ],
       child: const ArcanumApp(),
     ),

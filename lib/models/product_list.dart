@@ -1,4 +1,4 @@
-import 'package:arcanum/models/product.dart';
+/* import 'package:arcanum/models/product.dart';
 
 class ProductList {
   static final List<Product> tcg = [
@@ -168,4 +168,4 @@ class ProductList {
       description: 'You\'ll float too! This Pennywise Funko Pop! from Stephen King\'s It is a chilling addition to any horror collection.',
     ),
   ];
-}
+} */
