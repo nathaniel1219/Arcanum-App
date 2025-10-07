@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static const String baseUrl =
       'https://arcanumweb-production.up.railway.app/api';
-      /* 'http://127.0.0.1:8000/api'; */
+      /* 'http://127.0.0.1:8000/api'; */ //only use this link if the online site doesnt work
 
   static Future<Map<String, dynamic>> login(
     String email,

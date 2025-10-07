@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../services/product_service.dart';
 
-/// --------------------
-/// ProductController manages loading products,
-/// caching, and offline fallback
-/// --------------------
+
 class ProductController with ChangeNotifier {
   List<Product> _products = [];
   bool _isLoading = true;
@@ -15,7 +12,7 @@ class ProductController with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  /// Fetch products online, fallback to cache if offline
+  //pulls products from the ssp project (If offline it loads the json cache stuff)
   Future<void> fetchProducts() async {
     _isLoading = true;
     _errorMessage = null;

@@ -43,7 +43,7 @@ class _ConnectivityListenerState extends State<ConnectivityListener> {
       builder: (context, connectivity, _) {
         final isOnline = connectivity.isOnline;
 
-        // Only show SnackBar if status is known (not null) and changed
+        // Only show SnackBar if status changed
         if (_lastStatus != isOnline) {
           _lastStatus = isOnline;
 
@@ -63,8 +63,8 @@ class _ConnectivityListenerState extends State<ConnectivityListener> {
               backgroundColor: isOnline ? Colors.green[700] : Colors.red[700],
               duration:
                   isOnline
-                      ? const Duration(seconds: 3)
-                      : const Duration(seconds: 6), // longer for offline
+                      ? const Duration(seconds: 4)
+                      : const Duration(seconds: 6), 
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -116,7 +116,7 @@ class ArcanumApp extends StatelessWidget {
         bottomAppBarTheme: const BottomAppBarThemeData(color: Colors.black),
       ),
 
-      /// Wrap all pages in ConnectivityListener
+      
       builder: (context, child) {
         return ConnectivityListener(child: child ?? const SizedBox());
       },

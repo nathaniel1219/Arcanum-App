@@ -8,22 +8,7 @@ import '../db/sqflite_helper.dart';
 class ProductService {
   static const String baseUrl =
       'https://arcanumweb-production.up.railway.app/api';
-  /* 'http://127.0.0.1:8000/api'; */
-
-  // Fetch all products
-  /* static Future<List<Product>> fetchAllProducts({String? token}) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/products'),
-      headers: token != null ? {'Authorization': 'Bearer $token'} : {},
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      return data.map((item) => Product.fromJson(item)).toList();
-    } else {
-      throw Exception('Failed to load products: ${response.statusCode}');
-    }
-  } */
+  /* 'http://127.0.0.1:8000/api'; */ //only use this link if the online site doesnt work
 
   // Fetch all products with caching and SQLite integration
   static Future<List<Product>> fetchAllProducts({
@@ -37,27 +22,25 @@ class ProductService {
         final products = data.map((item) => Product.fromJson(item)).toList();
 
         if (updateCache) {
-          // ✅ Save to local JSON
           await saveProductsToCache(products);
-          print('✅ Products fetched online and cached locally.');
+          print('Products fetched from online and cached locally.');
 
-          // ✅ Save/update in SQLite
+          // Save products to SQLite database
           final db = SQFLiteHelper();
-          await db.clearProducts(); // optional: clear old products first
+          await db.clearProducts(); 
           for (var product in products) {
             await db.insertProduct(product.toJson());
           }
-          print('✅ Products saved to SQLite database.');
+          print('Products saved to SQLite database.');
         }
 
         return products;
       } else {
-        print('⚠️ Failed to load products online: ${response.statusCode}');
-        // ✅ Load cached products if available
+        print('Failed to load products online: ${response.statusCode}');
         final cachedProducts = await loadProductsFromCache();
         if (cachedProducts.isNotEmpty) {
           print(
-            '📦 Loaded ${cachedProducts.length} products from local cache.',
+            'Loaded ${cachedProducts.length} products from local cache.',
           );
           return cachedProducts;
         } else {
@@ -65,11 +48,10 @@ class ProductService {
         }
       }
     } catch (e) {
-      print('❌ Error fetching products: $e');
-      // ✅ Load cached products if available
+      print('Error fetching products: $e');
       final cachedProducts = await loadProductsFromCache();
       if (cachedProducts.isNotEmpty) {
-        print('📦 Loaded ${cachedProducts.length} products from local cache.');
+        print('Loaded ${cachedProducts.length} products from local cache.');
         return cachedProducts;
       } else {
         throw Exception('No cached products available.');
@@ -114,10 +96,10 @@ class ProductService {
   static Future<void> saveProductsToCache(List<Product> products) async {
     final file = await _getLocalFile();
     final jsonList =
-        products.map((p) => p.toJson()).toList(); // convert each product to Map
+        products.map((p) => p.toJson()).toList();
     await file.writeAsString(
       json.encode(jsonList),
-    ); // write JSON string to file
+    ); 
     print('Products cached locally at ${file.path}');
   }
 

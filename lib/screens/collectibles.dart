@@ -27,7 +27,7 @@ class CollectiblesScreen extends StatelessWidget {
       crossAxisCount = 2;
     }
 
-    // ✅ Filter products by Figures category
+    //only shows products in the figures category
     final products =
         productController.products.where((p) => p.category == 'Figures').toList();
 

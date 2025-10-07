@@ -109,12 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     if (_formKey.currentState!.validate()) {
                                       setState(() => _isLoading = true);
                                       try {
-                                        // NOTE: we pass passwordConfirmation as the 4th argument (required by your API)
                                         await AuthController().register(
                                           usernameController.text.trim(),
                                           emailController.text.trim(),
                                           passwordController.text.trim(),
-                                          passwordController.text.trim(), // password_confirmation
+                                          passwordController.text.trim(),
                                         );
 
                                         if (AuthController().isLoggedIn()) {

@@ -36,7 +36,7 @@ class Product {
     return {
       'id': id,
       'product_name': name,
-      'image_url': imageUrl.split('/').last, // store just the filename
+      'image_url': imageUrl.split('/').last,
       'price': price,
       'description': description,
       'category': category,

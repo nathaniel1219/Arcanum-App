@@ -63,7 +63,7 @@ class SQFLiteHelper {
     ''');
   }
 
-  /// --- Products ---
+
   Future<int> insertProduct(Map<String, dynamic> product) async {
     final db = await database;
     return await db.insert('products', product,
@@ -80,7 +80,7 @@ class SQFLiteHelper {
     return await db.delete('products');
   }
 
-  /// --- Users ---
+
   Future<int> insertUser(Map<String, dynamic> user) async {
     final db = await database;
     return await db.insert('users', user,
@@ -95,7 +95,7 @@ class SQFLiteHelper {
     return null;
   }
 
-  /// --- Cart ---
+
   Future<int> addToCart(int userId, int productId, int quantity) async {
     final db = await database;
     return await db.insert('cart', {

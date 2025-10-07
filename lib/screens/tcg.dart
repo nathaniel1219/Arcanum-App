@@ -27,7 +27,7 @@ class TcgScreen extends StatelessWidget {
       crossAxisCount = 2;
     }
 
-    // ✅ Filter products by TCG category
+    // only shows products in the tcg category
     final products =
         productController.products.where((p) => p.category == 'TCG').toList();
 

@@ -1,4 +1,6 @@
-/* import 'package:arcanum/models/product.dart';
+/* no need to use this file anymore cus im using the ssp project to fetch products
+
+import 'package:arcanum/models/product.dart';
 
 class ProductList {
   static final List<Product> tcg = [

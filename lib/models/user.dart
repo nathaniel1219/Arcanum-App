@@ -1,7 +1,7 @@
 class User {
-  final String name; // corresponds to Laravel 'name'
+  final String name; 
   final String email;
-  final String password; // optional, we won't store real password
+  final String password; 
 
   User({
     required this.name,
@@ -9,7 +9,7 @@ class User {
     this.password = '',
   });
 
-  // Helper: create a User from JSON (from API)
+  // create a user from the jsonm data
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'] ?? '',
@@ -17,7 +17,7 @@ class User {
     );
   }
 
-//Helper: for updating user info
+//update user info
   User copyWith({String? name, String? email}) {
     return User(
       name: name ?? this.name,

@@ -7,7 +7,7 @@ class CartController extends ChangeNotifier {
 
   List<Map<String, dynamic>> get cartItems => _cartItems;
 
-  // 🧮 Calculate total price
+  
   double get totalPrice {
     double total = 0.0;
     for (var item in _cartItems) {
@@ -20,7 +20,7 @@ class CartController extends ChangeNotifier {
     return total;
   }
 
-  // 🧾 Load saved cart from SharedPreferences
+  // uses the local storage` to load stuff in the cart with shareed preferences
   Future<void> loadCart() async {
     final prefs = await SharedPreferences.getInstance();
     final savedCart = prefs.getString('cart');
@@ -30,13 +30,12 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 💾 Save cart to SharedPreferences
   Future<void> _saveCart() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('cart', json.encode(_cartItems));
   }
 
-  // ➕ Add item to cart
+ 
   void addToCart(Map<String, dynamic> product) {
     final existingIndex = _cartItems.indexWhere(
       (item) => item['product_id'] == product['product_id'],
@@ -58,21 +57,21 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ➖ Remove item completely from cart
+  
   void removeFromCart(int productId) {
     _cartItems.removeWhere((item) => item['product_id'] == productId);
     _saveCart();
     notifyListeners();
   }
 
-  // 🧼 Clear all items from cart
+  
   void clearCart() {
     _cartItems.clear();
     _saveCart();
     notifyListeners();
   }
 
-  // 🔁 Update quantity for a specific item
+  
   void updateQuantity(int index, int newQuantity) {
     if (index >= 0 && index < _cartItems.length) {
       _cartItems[index]['quantity'] = newQuantity;

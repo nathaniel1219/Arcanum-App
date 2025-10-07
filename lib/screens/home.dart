@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ Use ProductController from Provider
+    
     final productController = Provider.of<ProductController>(context);
 
     final media = MediaQuery.of(context);
@@ -33,18 +33,15 @@ class HomeScreen extends StatelessWidget {
       body: Builder(
         builder: (_) {
           if (productController.isLoading) {
-            // ✅ Show loading spinner while fetching
             return const Center(child: CircularProgressIndicator());
           } else if (productController.errorMessage != null &&
               productController.products.isEmpty) {
-            // ✅ Show error if no cached products
             return Center(
               child: Text(
                 'Error: ${productController.errorMessage}\nNo cached products available.',
               ),
             );
           } else if (productController.products.isEmpty) {
-            // ✅ No products at all
             return const Center(child: Text('No products found.'));
           }
 

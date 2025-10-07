@@ -14,9 +14,9 @@ class AuthController extends ChangeNotifier {
   Future<void> login(String email, String password) async {
   final data = await ApiService.login(email, password);
 
-  authToken = data['access_token']; // ✅ store token
-  final userData = data['user']; 
-  currentUser = User.fromJson(userData); // use fromJson
+  authToken = data['access_token'];
+  final userData = data['user'];
+  currentUser = User.fromJson(userData);
   notifyListeners();
 }
 
@@ -33,7 +33,6 @@ class AuthController extends ChangeNotifier {
 
   // Logout
   Future<void> logout() async {
-    // Optional: call backend /api/logout
     currentUser = null;
     authToken = null;
     notifyListeners();

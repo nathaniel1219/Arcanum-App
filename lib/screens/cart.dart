@@ -1,6 +1,8 @@
 // lib/screens/cart.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import '../controllers/cart_controller.dart';
 import '../widgets/appbar.dart';
 import '../widgets/navbar.dart';
@@ -18,6 +20,47 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     Provider.of<CartController>(context, listen: false).loadCart();
+  }
+
+  // 🧭 Helper: Get current location and convert to address
+  Future<String> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return 'Location services are disabled.';
+    }
+
+    // Check permissions
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return 'Location permissions are denied.';
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return 'Location permissions are permanently denied.';
+    }
+
+    // Get current position
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    // Convert to human-readable address
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+
+    if (placemarks.isNotEmpty) {
+      Placemark place = placemarks.first;
+      return '${place.street}, ${place.locality}, ${place.country}';
+    } else {
+      return 'Unable to retrieve address.';
+    }
   }
 
   Widget _buildImage(String? imagePath) {
@@ -208,10 +251,23 @@ class _CartScreenState extends State<CartScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        cartController.clearCart();
+                      onPressed: () async {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Cart cleared!')),
+                          const SnackBar(content: Text('Fetching your location...')),
+                        );
+
+                        String address = await _getCurrentLocation();
+
+                        if (!mounted) return;
+
+                        cartController.clearCart();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Delivering to: $address'),
+                            duration: const Duration(seconds: 6),
+                            backgroundColor: Colors.green,
+                          ),
                         );
                       },
                       style: ElevatedButton.styleFrom(

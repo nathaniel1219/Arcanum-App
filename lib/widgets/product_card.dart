@@ -62,7 +62,6 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                // Add button: use provider to add to cart
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -71,7 +70,7 @@ class ProductCard extends StatelessWidget {
                         'product_id': product.id,
                         'product_name': product.name,
                         'price': product.price,
-                        'image_url': product.imageUrl, // local asset path (assets/...)
+                        'image_url': product.imageUrl, 
                         'quantity': 1,
                       });
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product added to cart!')));
