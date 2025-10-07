@@ -22,18 +22,17 @@ class _CartScreenState extends State<CartScreen> {
     Provider.of<CartController>(context, listen: false).loadCart();
   }
 
-  // 🧭 Helper: Get current location and convert to address
+  // current location
   Future<String> _getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Check if location services are enabled
+   
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return 'Location services are disabled.';
     }
 
-    // Check permissions
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -46,12 +45,10 @@ class _CartScreenState extends State<CartScreen> {
       return 'Location permissions are permanently denied.';
     }
 
-    // Get current position
     Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
 
-    // Convert to human-readable address
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
 
