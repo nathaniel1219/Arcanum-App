@@ -5,6 +5,7 @@ import 'package:arcanum/models/theme.dart';
 import 'package:arcanum/controllers/auth_controller.dart';
 import 'package:arcanum/controllers/product_controller.dart';
 import 'package:arcanum/controllers/connectivity_controller.dart';
+import 'package:arcanum/controllers/cart_controller.dart';
 import 'screens/auth/login.dart';
 
 void main() {
@@ -17,6 +18,7 @@ void main() {
           create: (_) => ProductController()..fetchProducts(),
         ),
         ChangeNotifierProvider(create: (_) => ConnectivityProvider()),
+        ChangeNotifierProvider(create: (_) => CartController()..loadCart()),
       ],
       child: const ArcanumApp(),
     ),
@@ -58,11 +60,11 @@ class _ConnectivityListenerState extends State<ConnectivityListener> {
                     : "Nooo you are offline:(\nAt least you can still browse our products\nGo online to access all the features of Arcanum",
                 style: const TextStyle(color: Colors.white),
               ),
-              backgroundColor:
-                  isOnline ? Colors.green[700] : Colors.red[700],
-              duration: isOnline
-                  ? const Duration(seconds: 3)
-                  : const Duration(seconds: 6), // longer for offline
+              backgroundColor: isOnline ? Colors.green[700] : Colors.red[700],
+              duration:
+                  isOnline
+                      ? const Duration(seconds: 3)
+                      : const Duration(seconds: 6), // longer for offline
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -123,4 +125,3 @@ class ArcanumApp extends StatelessWidget {
     );
   }
 }
-
